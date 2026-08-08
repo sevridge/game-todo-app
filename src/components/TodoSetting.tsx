@@ -20,11 +20,11 @@ export default function TodoSetting({gameTitle, label}: {gameTitle?: string, lab
           <div className="text-xl">{gameTitle || 'ゲーム未選択'}</div>
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
-              <div>Label: </div>
+              <div className="whitespace-nowrap">Label: </div>
               <input className="outline-none px-2 py-1 rounded-md w-full bg-white/10" type="text" value={label} />
             </div>
             <div className="flex items-center gap-2">
-              <div>更新頻度: </div>
+              <div className="whitespace-nowrap">更新頻度: </div>
               <select className="outline-none px-2 py-1 rounded-md bg-white/10" onChange={resetTimeOnChange}>
                 <option className="bg-zinc-600" value="none">タスクの更新頻度を選択...</option>
                 <option className="bg-zinc-600" value="daily">毎日</option>
@@ -64,7 +64,7 @@ export default function TodoSetting({gameTitle, label}: {gameTitle?: string, lab
               </div>
             )}
             <div className="flex items-center gap-2">
-              <div>優先度: </div>
+              <div className="whitespace-nowrap">優先度: </div>
               <select className="outline-none px-2 py-1 rounded-md bg-white/10">
                 <option className="bg-zinc-600" value="high">高い</option>
                 <option className="bg-zinc-600" value="medium">標準</option>
