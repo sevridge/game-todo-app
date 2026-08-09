@@ -3,6 +3,7 @@ import TodoSetting from "./components/TodoSetting";
 import { currentMonitor, getCurrentWindow, LogicalPosition, LogicalSize } from "@tauri-apps/api/window";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRotateRight, faThumbtack, faThumbtackSlash, faWindowMinimize, faX } from "@fortawesome/free-solid-svg-icons";
+import Dashboard from "./components/Dashboard";
 
 async function initWindow() {
   const monitor = await currentMonitor();
@@ -61,7 +62,7 @@ function App() {
           </div>
         </div>
         <div className="bg-zinc-900">
-
+          <Dashboard />
         </div>
       </div>
       <TodoSetting />
