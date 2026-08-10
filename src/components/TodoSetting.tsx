@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react";
 
 export default function TodoSetting({gameTitle, label}: {gameTitle?: string, label?: string}) {
   const [ resetTimeStatus, setResetTimeStatus ] = useState<string|null>(null);
-  const [ closing, setClosing ] = useState<boolean>(false);
+  const [ isOpen, setIsOpen ] = useState<boolean>(false);
 
   function resetTimeOnChange(e: ChangeEvent<HTMLSelectElement>) {
     const type = e.target.value;
@@ -10,12 +10,12 @@ export default function TodoSetting({gameTitle, label}: {gameTitle?: string, lab
   }
 
   function closeTodoSetting() {
-    setClosing(true);
+    setIsOpen(true);
   }
 
   return (
     <>
-      {!closing && (
+      {isOpen && (
         <div className="absolute top-[50%] left-[50%] translate-[-50%] p-3 rounded-md text-white bg-zinc-700 flex flex-col items-center">
           <div className="text-xl">{gameTitle || 'ゲーム未選択'}</div>
           <div className="flex flex-col gap-3">
