@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRotateRight, faThumbtack, faThumbtackSlash, faWindowMinimize, faX } from "@fortawesome/free-solid-svg-icons";
 import { currentMonitor, getCurrentWindow, LogicalPosition, LogicalSize } from "@tauri-apps/api/window";
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 async function initWindow() {
   const monitor = await currentMonitor();
@@ -29,6 +29,26 @@ async function windowClose() {
 export default function Titlebar() {
   const [ isAlwaysOnTop, setIsAlwaysOnTop ] = useState<boolean>(false);
   const [ iconHover, setIconHover ] = useState<{x: number, y: number, title: string}|null>(null);
+  const iconTitleRef = useRef<HTMLDivElement|null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const iconTitleEl = iconTitleRef.current;
+      if (!iconTitleEl || !iconHover) return;
+      const window = await getCurrentWindow();
+      const windowSize = await window.innerSize();
+      const iconTitleSize = iconTitleEl.getBoundingClientRect();
+      if (windowSize.width < iconTitleSize.right) {
+        setIconHover(prev => {
+          if (!prev) return null;
+          return {
+            ...prev,
+            x: prev.x - (iconTitleSize.right - windowSize.width),
+          }
+        })
+      }
+    })()
+  }, [iconHover]);
 
   async function windowAlwaysOnTop() {
     const window = await getCurrentWindow();
@@ -62,8 +82,7 @@ export default function Titlebar() {
         <FontAwesomeIcon className="cursor-pointer p-2 hover:bg-red-500" icon={faX} onClick={windowClose} onMouseEnter={(e) => _onIconHover(true, e, '閉じる')} onMouseLeave={() => setIconHover(null)} />
       </div>
       {iconHover && (
-        // これが画面外に出た場合逆方向を基準にする
-        <div className="absolute pointer-events-none text-xs whitespace-nowrap" style={{left: iconHover.x, top: iconHover.y}}>{iconHover.title}</div>
+        <div ref={iconTitleRef} className="absolute pointer-events-none text-xs whitespace-nowrap" style={{left: iconHover.x, top: iconHover.y + 16}}>{iconHover.title}</div>
       )}
     </div>
   )
