@@ -20,7 +20,7 @@ export default function GameSelector({gameTasksData}: {gameTasksData?: any}) {
             {isOpen ? <FontAwesomeIcon icon={faCaretDown} /> : <FontAwesomeIcon icon={faCaretRight} />}
           </div>
           {isOpen && (
-            <div className="rounded-md overflow-hidden bg-zinc-700">
+            <div className="absolute top-full rounded-md overflow-hidden bg-zinc-700 whitespace-nowrap">
               <div className="px-2 py-1 text-xs text-zinc-400">ゲーム</div>
               {gameTasksData?.[0] && gameTasksData.map((v: any) => {
                 return (
