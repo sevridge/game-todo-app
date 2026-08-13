@@ -3,6 +3,7 @@ import TodoSetting from "./components/TodoSetting";
 import { currentMonitor, getCurrentWindow, LogicalPosition, LogicalSize } from "@tauri-apps/api/window";
 import Dashboard from "./components/Dashboard";
 import Titlebar from "./components/Titlebar";
+import { gamesStore, tasksStore } from "./utils/storage";
 
 async function initWindow() {
   const monitor = await currentMonitor();
@@ -18,9 +19,20 @@ async function initWindow() {
 }
 
 function App() {
+  const [ registeredTasks, setRegisteredTasks ] = useState<StoreTask[]|null>(null);
+  const [ registeredGames, setRegisteredGames ] = useState<StoreGame[]|null>(null);
+
   useEffect(() => {
     (async () => {
       await initWindow();
+      const games: StoreGame[]|undefined = await gamesStore.get('games');
+      const tasks: StoreTask[]|undefined = await tasksStore.get('tasks');
+      if (games) {
+        setRegisteredGames(games);
+      }
+      if (tasks) {
+        setRegisteredTasks(tasks);
+      }
     })();
   }, []);
 
