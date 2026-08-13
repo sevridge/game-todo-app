@@ -3,13 +3,13 @@ import { faCaretDown, faCaretRight, faPlus } from "@fortawesome/free-solid-svg-i
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react"
 
-export default function GameSelector({gameTasksData}: {gameTasksData?: any}) {
+export default function GameSelector({regGames}: {regGames?: any}) {
   const [ isOpen, setIsOpen ] = useState<boolean>(false);
   const [ currentTaskData, setCurrentTaskData ] = useState<any>(null);
 
   useEffect(() => {
-    if (!gameTasksData?.[0]) return;
-    setCurrentTaskData(gameTasksData[0]);
+    if (!regGames?.[0]) return;
+    setCurrentTaskData(regGames[0]);
   }, [])
 
   return (
@@ -22,7 +22,7 @@ export default function GameSelector({gameTasksData}: {gameTasksData?: any}) {
           {isOpen && (
             <div className="absolute top-full rounded-md overflow-hidden bg-zinc-700 whitespace-nowrap">
               <div className="px-2 py-1 text-xs text-zinc-400">ゲーム</div>
-              {gameTasksData?.[0] && gameTasksData.map((v: any) => {
+              {regGames?.[0] && regGames.map((v: any) => {
                 return (
                   <div className="px-2 py-1 cursor-pointer bg-zinc-500" data-value="nte">{v?.title}</div>
                 )
