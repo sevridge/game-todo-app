@@ -41,7 +41,7 @@ function App() {
       <div className="h-full grid grid-rows-[auto_1fr]">
         <Titlebar />
         <div className="bg-zinc-900">
-          <Dashboard />
+          <Dashboard regGames={registeredGames ? registeredGames : undefined} regTasks={registeredTasks ? registeredTasks : undefined} />
         </div>
       </div>
       <TodoSetting />
