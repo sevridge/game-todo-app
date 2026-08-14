@@ -20,10 +20,10 @@ function TaskItem({task}: {task: StoreTask}) {
   )
 }
 
-export default function Dashboard({regGames, regTasks}: {regGames?: StoreGame[], regTasks?: StoreTask[]}) {
+export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}: {regGames?: StoreGame[], regTasks?: StoreTask[], setRegGames?: React.Dispatch<React.SetStateAction<StoreGame[] | null>>, setRegTasks?: React.Dispatch<React.SetStateAction<StoreTask[] | null>>}) {
   return (
     <>
-      <GameSelector regGames={regGames} />
+      <GameSelector regGames={regGames} setRegGames={setRegGames} />
       <div className="p-3">
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
