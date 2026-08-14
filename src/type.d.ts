@@ -3,5 +3,6 @@ interface StoreTask {
 }
 
 interface StoreGame {
+  id: string,
   title: string
 }

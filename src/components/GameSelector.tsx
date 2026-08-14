@@ -2,6 +2,7 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faCaretDown, faCaretRight, faCheck, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react"
+import { randomString } from "../utils/string";
 
 export default function GameSelector({regGames, setRegGames}: {regGames?: StoreGame[], setRegGames?: React.Dispatch<React.SetStateAction<StoreGame[] | null>>}) {
   const [ isOpen, setIsOpen ] = useState<boolean>(false);
@@ -12,6 +13,11 @@ export default function GameSelector({regGames, setRegGames}: {regGames?: StoreG
     if (!regGames?.[0]) return;
     setCurrentTaskData(regGames[0]);
   }, [])
+
+  useEffect(() => {
+    if (!regGames?.[0]) return;
+    setCurrentTaskData(regGames[regGames.length - 1]);
+  }, [regGames])
 
   function InputGame() {
     const inputGameRef = useRef<HTMLInputElement|null>(null);
@@ -29,6 +35,7 @@ export default function GameSelector({regGames, setRegGames}: {regGames?: StoreG
       setRegGames?.(prev => {
         const newPrev = prev ? [...prev] : [];
         newPrev.push({
+          id: randomString(8),
           title: value
         })
 
@@ -67,9 +74,9 @@ export default function GameSelector({regGames, setRegGames}: {regGames?: StoreG
           {isOpen && (
             <div className="absolute top-full rounded-md overflow-hidden bg-zinc-700 whitespace-nowrap">
               <div className="px-2 py-1 text-xs text-zinc-400">ゲーム</div>
-              {regGames?.[0] && regGames.map((v, i) => {
+              {regGames?.[0] && regGames.map((v) => {
                 return (
-                  <div key={i} className="px-2 py-1 cursor-pointer bg-zinc-500" data-value="nte">{v?.title}</div>
+                  <div key={v.id} className="px-2 py-1 cursor-pointer" data-value={v.id}>{v.title}</div>
                 )
               })}
               <div className="px-2 py-1">
