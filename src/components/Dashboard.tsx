@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GameSelector from "./GameSelector";
 import { faCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useId, useState } from "react";
+import TodoSetting from "./TodoSetting";
 
 function TaskItem({task}: {task: StoreTask}) {
   const id = useId();
@@ -22,6 +23,7 @@ function TaskItem({task}: {task: StoreTask}) {
 
 export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}: {regGames?: StoreGame[], regTasks?: StoreTask[], setRegGames?: React.Dispatch<React.SetStateAction<StoreGame[] | null>>, setRegTasks?: React.Dispatch<React.SetStateAction<StoreTask[] | null>>}) {
   const [ currentTaskData, setCurrentTaskData ] = useState<StoreGame|null>(null);
+  const [ todoSettingIsOpen, setTodoSettingIsOpen ] = useState<boolean>(false);
 
   return (
     <>
@@ -33,12 +35,13 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
               return v.gameId === currentTaskData?.id && <TaskItem key={i} task={v} />
             })}
           </div>
-          <button className="flex items-center outline-none gap-1 border border-dashed px-2 py-1 rounded-md cursor-pointer">
+          <button className="flex items-center outline-none gap-1 border border-dashed px-2 py-1 rounded-md cursor-pointer" onClick={() => setTodoSettingIsOpen(true)}>
             <FontAwesomeIcon icon={faPlus} />
             <div>タスクを追加</div>
           </button>
         </div>
       </div>
+      {todoSettingIsOpen && <TodoSetting setTodoSettingIsOpen={setTodoSettingIsOpen} />}
     </>
   )
 }

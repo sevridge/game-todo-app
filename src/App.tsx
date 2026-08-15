@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import TodoSetting from "./components/TodoSetting";
 import { currentMonitor, getCurrentWindow, LogicalPosition, LogicalSize } from "@tauri-apps/api/window";
 import Dashboard from "./components/Dashboard";
 import Titlebar from "./components/Titlebar";
@@ -44,7 +43,6 @@ function App() {
           <Dashboard regGames={registeredGames ? registeredGames : undefined} regTasks={registeredTasks ? registeredTasks : undefined} setRegGames={setRegisteredGames} setRegTasks={setRegisteredTasks} />
         </div>
       </div>
-      <TodoSetting />
     </main>
   );
 }
