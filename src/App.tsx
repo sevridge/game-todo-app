@@ -39,7 +39,7 @@ function App() {
     <main className="h-full overflow-hidden text-white">
       <div className="h-full grid grid-rows-[auto_1fr]">
         <Titlebar />
-        <div className="bg-zinc-900">
+        <div className="bg-zinc-900 relative">
           <Dashboard regGames={registeredGames ? registeredGames : undefined} regTasks={registeredTasks ? registeredTasks : undefined} setRegGames={setRegisteredGames} setRegTasks={setRegisteredTasks} />
         </div>
       </div>
