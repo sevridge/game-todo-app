@@ -8,6 +8,13 @@ export default function GameSelector({regGames, setRegGames}: {regGames?: StoreG
   const [ isOpen, setIsOpen ] = useState<boolean>(false);
   const [ currentTaskData, setCurrentTaskData ] = useState<any>(null);
   const [ inputGameIsOpen, setInputGameIsOpen ] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  function onClickDocument(e: PointerEvent) {
+    if (e.target instanceof Node && isOpen && !dropdownRef.current?.contains(e.target)) {
+      setIsOpen(false);
+    }
+  }
 
   useEffect(() => {
     if (!regGames?.[0]) return;
@@ -18,6 +25,13 @@ export default function GameSelector({regGames, setRegGames}: {regGames?: StoreG
     if (!regGames?.[0]) return;
     setCurrentTaskData(regGames[regGames.length - 1]);
   }, [regGames])
+
+  useEffect(() => {
+    document.addEventListener('click', onClickDocument);
+    return () => {
+      document.removeEventListener('click', onClickDocument);
+    }
+  }, [isOpen])
 
   function InputGame() {
     const inputGameRef = useRef<HTMLInputElement|null>(null);
@@ -66,7 +80,7 @@ export default function GameSelector({regGames, setRegGames}: {regGames?: StoreG
   return (
     <>
       <div className="w-full flex justify-center text-sm select-none">
-        <div className="relative flex flex-col items-center">
+        <div ref={dropdownRef} className="relative flex flex-col items-center">
           <div className="flex items-center justify-center px-2 py-1 border-b border-white" onClick={() => setIsOpen(prev => !prev)}>
             <div>{currentTaskData?.title || 'ゲーム'}</div>
             {isOpen ? <FontAwesomeIcon icon={faCaretDown} /> : <FontAwesomeIcon icon={faCaretRight} />}
