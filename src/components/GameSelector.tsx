@@ -16,11 +16,10 @@ export default function GameSelector({regGames, setRegGames, currentTaskData, se
   }
 
   function onClickRemove() {
-    setRegGames?.(prev => {
-      const newPrev = prev?.filter(v => v.id !== currentTaskData?.id);
-      setCurrentTaskData?.(newPrev?.[0] || null);
-      return newPrev || null;
-    })
+    const newGames = regGames?.filter(v => v.id !== currentTaskData?.id);
+
+    setRegGames?.(newGames || null);
+    setCurrentTaskData?.(newGames?.[0] || null);
   }
 
   useEffect(() => {
