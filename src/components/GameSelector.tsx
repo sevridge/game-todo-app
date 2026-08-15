@@ -15,6 +15,14 @@ export default function GameSelector({regGames, setRegGames, currentTaskData, se
     }
   }
 
+  function onClickRemove() {
+    setRegGames?.(prev => {
+      const newPrev = prev?.filter(v => v.id !== currentTaskData?.id);
+      setCurrentTaskData?.(newPrev?.[0] || null);
+      return newPrev || null;
+    })
+  }
+
   useEffect(() => {
     if (!regGames?.[0]) return;
     setCurrentTaskData?.(regGames[0]);
@@ -89,7 +97,7 @@ export default function GameSelector({regGames, setRegGames, currentTaskData, se
               <div className="px-2 py-1 text-xs text-zinc-400">ゲーム</div>
               {regGames?.[0] && regGames.map((v) => {
                 return (
-                  <div key={v.id} className={`px-2 py-1 cursor-pointer ${currentTaskData?.id === v.id && 'bg-zinc-500'}`} data-value={v.id}>{v.title}</div>
+                  <div key={v.id} className={`px-2 py-1 cursor-pointer ${currentTaskData?.id === v.id && 'bg-zinc-500'}`} data-value={v.id} onClick={() => setCurrentTaskData?.(v)}>{v.title}</div>
                 )
               })}
               <div className="px-2 py-1">
@@ -100,7 +108,7 @@ export default function GameSelector({regGames, setRegGames, currentTaskData, se
                 <div>新規追加</div>
               </div>
               {currentTaskData?.title && (
-              <div className="px-2 py-1 cursor-pointer text-red-200 flex items-center gap-1">
+              <div className="px-2 py-1 cursor-pointer text-red-200 flex items-center gap-1" onClick={onClickRemove}>
                 <FontAwesomeIcon icon={faTrashCan} />
                 <div>{currentTaskData.title} を削除</div>
               </div>
