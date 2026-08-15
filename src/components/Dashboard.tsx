@@ -30,7 +30,7 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
             {regTasks?.map((v, i) => {
-              return <TaskItem key={i} task={v} />
+              return v.gameId === currentTaskData?.id && <TaskItem key={i} task={v} />
             })}
           </div>
           <button className="flex items-center outline-none gap-1 border border-dashed px-2 py-1 rounded-md cursor-pointer">

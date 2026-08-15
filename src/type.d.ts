@@ -1,4 +1,6 @@
 interface StoreTask {
+  id: string,
+  gameId: string,
   label: string,
 }
 
