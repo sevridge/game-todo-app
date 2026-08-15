@@ -89,7 +89,7 @@ export default function GameSelector({regGames, setRegGames, currentTaskData, se
               <div className="px-2 py-1 text-xs text-zinc-400">ゲーム</div>
               {regGames?.[0] && regGames.map((v) => {
                 return (
-                  <div key={v.id} className="px-2 py-1 cursor-pointer" data-value={v.id}>{v.title}</div>
+                  <div key={v.id} className={`px-2 py-1 cursor-pointer ${currentTaskData?.id === v.id && 'bg-zinc-500'}`} data-value={v.id}>{v.title}</div>
                 )
               })}
               <div className="px-2 py-1">
