@@ -4,9 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react"
 import { randomString } from "../utils/string";
 
-export default function GameSelector({regGames, setRegGames}: {regGames?: StoreGame[], setRegGames?: React.Dispatch<React.SetStateAction<StoreGame[] | null>>}) {
+export default function GameSelector({regGames, setRegGames, currentTaskData, setCurrentTaskData}: {regGames?: StoreGame[], setRegGames?: React.Dispatch<React.SetStateAction<StoreGame[] | null>>, currentTaskData?: StoreGame, setCurrentTaskData?: React.Dispatch<React.SetStateAction<StoreGame | null>>}) {
   const [ isOpen, setIsOpen ] = useState<boolean>(false);
-  const [ currentTaskData, setCurrentTaskData ] = useState<any>(null);
   const [ inputGameIsOpen, setInputGameIsOpen ] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -18,12 +17,12 @@ export default function GameSelector({regGames, setRegGames}: {regGames?: StoreG
 
   useEffect(() => {
     if (!regGames?.[0]) return;
-    setCurrentTaskData(regGames[0]);
+    setCurrentTaskData?.(regGames[0]);
   }, [])
 
   useEffect(() => {
     if (!regGames?.[0]) return;
-    setCurrentTaskData(regGames[regGames.length - 1]);
+    setCurrentTaskData?.(regGames[regGames.length - 1]);
   }, [regGames])
 
   useEffect(() => {

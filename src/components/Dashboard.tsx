@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GameSelector from "./GameSelector";
 import { faCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useId } from "react";
+import { useId, useState } from "react";
 
 function TaskItem({task}: {task: StoreTask}) {
   const id = useId();
@@ -21,9 +21,11 @@ function TaskItem({task}: {task: StoreTask}) {
 }
 
 export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}: {regGames?: StoreGame[], regTasks?: StoreTask[], setRegGames?: React.Dispatch<React.SetStateAction<StoreGame[] | null>>, setRegTasks?: React.Dispatch<React.SetStateAction<StoreTask[] | null>>}) {
+  const [ currentTaskData, setCurrentTaskData ] = useState<StoreGame|null>(null);
+
   return (
     <>
-      <GameSelector regGames={regGames} setRegGames={setRegGames} />
+      <GameSelector regGames={regGames} setRegGames={setRegGames} currentTaskData={currentTaskData || undefined} setCurrentTaskData={setCurrentTaskData} />
       <div className="p-3">
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
