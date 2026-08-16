@@ -1,12 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GameSelector from "./GameSelector";
-import { faCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useId, useState } from "react";
 import TodoSetting from "./TodoSetting";
 import { randomString } from "../utils/string";
 
-function TaskItem({task}: {task: StoreTask}) {
+function TaskItem({task, setRegTasks}: {task: StoreTask, setRegTasks?: React.Dispatch<React.SetStateAction<StoreTask[] | null>>}) {
   const id = useId();
+
+  function removeTask() {
+    setRegTasks?.(prev => {
+      const newPrev = prev?.filter((v) => v.id !== task.id) ;
+
+      // TODO: Store保存
+
+      return newPrev || null;
+    })
+  }
+
   return (
     <div className="px-2 py-1 rounded-md bg-zinc-800 select-none">
       <div className="flex items-center gap-2">
@@ -17,6 +28,11 @@ function TaskItem({task}: {task: StoreTask}) {
           </div>
         </label>
         <div>{task.label}</div>
+        <div className="flex items-center flex-1 justify-end">
+          <div className="flex items-center cursor-pointer text-[0.65rem]" onClick={removeTask}>
+            <FontAwesomeIcon icon={faXmark} />
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -50,10 +66,9 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
             {regTasks?.map((v, i) => {
-              return v.gameId === currentGameData?.id && <TaskItem key={i} task={v} />
+              return v.gameId === currentGameData?.id && <TaskItem key={i} task={v} setRegTasks={setRegTasks} />
             })}
           </div>
-          {/* TODO: タスク削除処理追加 */}
           {currentGameData && <button className="flex items-center outline-none gap-1 border border-dashed px-2 py-1 rounded-md cursor-pointer" onClick={() => setTodoSettingIsOpen(true)}>
             <FontAwesomeIcon icon={faPlus} />
             <div>タスクを追加</div>
