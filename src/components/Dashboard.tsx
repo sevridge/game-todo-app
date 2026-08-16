@@ -3,6 +3,7 @@ import GameSelector from "./GameSelector";
 import { faCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useId, useState } from "react";
 import TodoSetting from "./TodoSetting";
+import { randomString } from "../utils/string";
 
 function TaskItem({task}: {task: StoreTask}) {
   const id = useId();
@@ -25,6 +26,24 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
   const [ currentGameData, setCurrentGameData ] = useState<StoreGame|null>(null);
   const [ todoSettingIsOpen, setTodoSettingIsOpen ] = useState<boolean>(false);
 
+  function addNewTask(label: string, resetTime: string, resetTimeStatus: { time: number, week?: string, day?: number}, priority: string) {
+    if (!currentGameData) return;
+
+    setRegTasks?.(prev => {
+      const newPrev = prev ? [...prev] : [];
+      newPrev.push({
+        id: randomString(8),
+        gameId: currentGameData.id,
+        label,
+      })
+
+      // TODO: Store保存
+
+      return newPrev;
+    })
+    setTodoSettingIsOpen(false);
+  }
+
   return (
     <>
       <GameSelector regGames={regGames} setRegGames={setRegGames} currentGameData={currentGameData || undefined} setCurrentGameData={setCurrentGameData} />
@@ -35,6 +54,7 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
               return v.gameId === currentGameData?.id && <TaskItem key={i} task={v} />
             })}
           </div>
+          {/* TODO: タスク削除処理追加 */}
           <button className="flex items-center outline-none gap-1 border border-dashed px-2 py-1 rounded-md cursor-pointer" onClick={() => setTodoSettingIsOpen(true)}>
             <FontAwesomeIcon icon={faPlus} />
             <div>タスクを追加</div>
