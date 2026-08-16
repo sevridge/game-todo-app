@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react"
 import { randomString } from "../utils/string";
 
-export default function GameSelector({regGames, setRegGames, currentTaskData, setCurrentTaskData}: {regGames?: StoreGame[], setRegGames?: React.Dispatch<React.SetStateAction<StoreGame[] | null>>, currentTaskData?: StoreGame, setCurrentTaskData?: React.Dispatch<React.SetStateAction<StoreGame | null>>}) {
+export default function GameSelector({regGames, setRegGames, currentGameData, setCurrentGameData}: {regGames?: StoreGame[], setRegGames?: React.Dispatch<React.SetStateAction<StoreGame[] | null>>, currentGameData?: StoreGame, setCurrentGameData?: React.Dispatch<React.SetStateAction<StoreGame | null>>}) {
   const [ isOpen, setIsOpen ] = useState<boolean>(false);
   const [ inputGameIsOpen, setInputGameIsOpen ] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -16,20 +16,20 @@ export default function GameSelector({regGames, setRegGames, currentTaskData, se
   }
 
   function onClickRemove() {
-    const newGames = regGames?.filter(v => v.id !== currentTaskData?.id);
+    const newGames = regGames?.filter(v => v.id !== currentGameData?.id);
 
     setRegGames?.(newGames || null);
-    setCurrentTaskData?.(newGames?.[0] || null);
+    setCurrentGameData?.(newGames?.[0] || null);
   }
 
   useEffect(() => {
     if (!regGames?.[0]) return;
-    setCurrentTaskData?.(regGames[0]);
+    setCurrentGameData?.(regGames[0]);
   }, [])
 
   useEffect(() => {
     if (!regGames?.[0]) return;
-    setCurrentTaskData?.(regGames[regGames.length - 1]);
+    setCurrentGameData?.(regGames[regGames.length - 1]);
   }, [regGames])
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export default function GameSelector({regGames, setRegGames, currentTaskData, se
       <div className="w-full flex justify-center text-sm select-none">
         <div ref={dropdownRef} className="relative flex flex-col items-center">
           <div className="flex items-center justify-center px-2 py-1 border-b border-white" onClick={() => setIsOpen(prev => !prev)}>
-            <div>{currentTaskData?.title || 'ゲーム'}</div>
+            <div>{currentGameData?.title || 'ゲーム'}</div>
             {isOpen ? <FontAwesomeIcon icon={faCaretDown} /> : <FontAwesomeIcon icon={faCaretRight} />}
           </div>
           {isOpen && (
@@ -96,7 +96,7 @@ export default function GameSelector({regGames, setRegGames, currentTaskData, se
               <div className="px-2 py-1 text-xs text-zinc-400">ゲーム</div>
               {regGames?.[0] && regGames.map((v) => {
                 return (
-                  <div key={v.id} className={`px-2 py-1 cursor-pointer ${currentTaskData?.id === v.id && 'bg-zinc-500'}`} data-value={v.id} onClick={() => setCurrentTaskData?.(v)}>{v.title}</div>
+                  <div key={v.id} className={`px-2 py-1 cursor-pointer ${currentGameData?.id === v.id && 'bg-zinc-500'}`} data-value={v.id} onClick={() => setCurrentGameData?.(v)}>{v.title}</div>
                 )
               })}
               <div className="px-2 py-1">
@@ -106,10 +106,10 @@ export default function GameSelector({regGames, setRegGames, currentTaskData, se
                 <FontAwesomeIcon icon={faPlus} />
                 <div>新規追加</div>
               </div>
-              {currentTaskData?.title && (
+              {currentGameData?.title && (
               <div className="px-2 py-1 cursor-pointer text-red-200 flex items-center gap-1" onClick={onClickRemove}>
                 <FontAwesomeIcon icon={faTrashCan} />
-                <div>{currentTaskData.title} を削除</div>
+                <div>{currentGameData.title} を削除</div>
               </div>
               )}
             </div>

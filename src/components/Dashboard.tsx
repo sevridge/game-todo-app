@@ -22,17 +22,17 @@ function TaskItem({task}: {task: StoreTask}) {
 }
 
 export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}: {regGames?: StoreGame[], regTasks?: StoreTask[], setRegGames?: React.Dispatch<React.SetStateAction<StoreGame[] | null>>, setRegTasks?: React.Dispatch<React.SetStateAction<StoreTask[] | null>>}) {
-  const [ currentTaskData, setCurrentTaskData ] = useState<StoreGame|null>(null);
+  const [ currentGameData, setCurrentGameData ] = useState<StoreGame|null>(null);
   const [ todoSettingIsOpen, setTodoSettingIsOpen ] = useState<boolean>(false);
 
   return (
     <>
-      <GameSelector regGames={regGames} setRegGames={setRegGames} currentTaskData={currentTaskData || undefined} setCurrentTaskData={setCurrentTaskData} />
+      <GameSelector regGames={regGames} setRegGames={setRegGames} currentGameData={currentGameData || undefined} setCurrentGameData={setCurrentGameData} />
       <div className="p-3">
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
             {regTasks?.map((v, i) => {
-              return v.gameId === currentTaskData?.id && <TaskItem key={i} task={v} />
+              return v.gameId === currentGameData?.id && <TaskItem key={i} task={v} />
             })}
           </div>
           <button className="flex items-center outline-none gap-1 border border-dashed px-2 py-1 rounded-md cursor-pointer" onClick={() => setTodoSettingIsOpen(true)}>
@@ -41,7 +41,7 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
           </button>
         </div>
       </div>
-      {todoSettingIsOpen && <TodoSetting setTodoSettingIsOpen={setTodoSettingIsOpen} />}
+      {todoSettingIsOpen && <TodoSetting setTodoSettingIsOpen={setTodoSettingIsOpen} addNewTask={addNewTask} />}
     </>
   )
 }
