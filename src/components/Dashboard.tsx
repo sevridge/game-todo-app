@@ -28,7 +28,6 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
 
   function addNewTask(label: string, resetTime: string, resetTimeStatus: { time: number, week?: string, day?: number}, priority: string) {
     if (!currentGameData) return;
-
     setRegTasks?.(prev => {
       const newPrev = prev ? [...prev] : [];
       newPrev.push({
@@ -55,10 +54,10 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
             })}
           </div>
           {/* TODO: タスク削除処理追加 */}
-          <button className="flex items-center outline-none gap-1 border border-dashed px-2 py-1 rounded-md cursor-pointer" onClick={() => setTodoSettingIsOpen(true)}>
+          {currentGameData && <button className="flex items-center outline-none gap-1 border border-dashed px-2 py-1 rounded-md cursor-pointer" onClick={() => setTodoSettingIsOpen(true)}>
             <FontAwesomeIcon icon={faPlus} />
             <div>タスクを追加</div>
-          </button>
+          </button>}
         </div>
       </div>
       {todoSettingIsOpen && <TodoSetting setTodoSettingIsOpen={setTodoSettingIsOpen} addNewTask={addNewTask} />}
