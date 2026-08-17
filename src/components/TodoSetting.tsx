@@ -51,12 +51,12 @@ export default function TodoSetting({gameTitle, label, setTodoSettingIsOpen, add
               <div className="text-sm">更新頻度詳細</div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
-                  <input ref={resetTimeTimeRef} className="outline-none px-2 py-1 rounded-md bg-white/10" type="number" min="0" max="23" />
+                  <input ref={resetTimeTimeRef} className="outline-none px-2 py-1 rounded-md bg-white/10" type="number" min="0" max="23" defaultValue="5" />
                   <div>時</div>
                 </div>
                 {(resetTimeStatus === 'weekly' || resetTimeStatus === 'every-week') && (
                   <div className="flex items-center gap-2">
-                    <select ref={resetTimeWeekRef} className="outline-none px-2 py-1 rounded-md bg-white/10">
+                    <select ref={resetTimeWeekRef} className="outline-none px-2 py-1 rounded-md bg-white/10" defaultValue="1">
                       <option className="bg-zinc-600" value="0">日曜日</option>
                       <option className="bg-zinc-600" value="1">月曜日</option>
                       <option className="bg-zinc-600" value="2">火曜日</option>
@@ -69,7 +69,7 @@ export default function TodoSetting({gameTitle, label, setTodoSettingIsOpen, add
                 )}
                 {resetTimeStatus === 'monthly' && (
                   <div className="flex items-center gap-2">
-                    <input ref={resetTimeDayRef} className="outline-none px-2 py-1 rounded-md bg-white/10" type="number" min="1" max="31" />
+                    <input ref={resetTimeDayRef} className="outline-none px-2 py-1 rounded-md bg-white/10" type="number" min="1" max="31" defaultValue="1" />
                     <div>日</div>
                   </div>
                 )}
