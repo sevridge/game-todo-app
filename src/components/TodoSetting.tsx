@@ -28,7 +28,7 @@ export default function TodoSetting({gameTitle, label, setTodoSettingIsOpen, add
   }
 
   return (
-    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-xs">
+    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-xs z-100">
       <div className="p-3 rounded-md text-white bg-zinc-700 flex flex-col items-center">
         <div className="text-xl">{gameTitle || 'ゲーム未選択'}</div>
         <div className="flex flex-col gap-3">

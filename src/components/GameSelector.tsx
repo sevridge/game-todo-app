@@ -65,7 +65,7 @@ export default function GameSelector({regGames, setRegGames, currentGameData, se
     }
 
     return (
-      <div className="absolute w-full h-full top-0 left-0 flex items-center justify-center backdrop-blur-xs">
+      <div className="absolute w-full h-full top-0 left-0 flex items-center justify-center backdrop-blur-xs z-100">
         <div className="p-2 rounded-md bg-zinc-700">
           <input ref={inputGameRef} type="text" className="outline-none p-1 w-60 bg-zinc-600" placeholder="ゲーム名..." />
           {isMissingValue && <div className="text-center text-xs text-red-400">空欄以外の文字を入力してください</div>}
