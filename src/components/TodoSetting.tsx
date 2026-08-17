@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef, useState } from "react";
 
-export default function TodoSetting({gameTitle, label, setTodoSettingIsOpen, addNewTask}: {gameTitle?: string, label?: string, setTodoSettingIsOpen?: React.Dispatch<React.SetStateAction<boolean>>, addNewTask: (label: string, resetTime: string, resetTimeStatus: { time: number, week?: string, day?: number}, priority: string) => void}) {
+export default function TodoSetting({gameTitle, label, setTodoSettingIsOpen, addNewTask}: {gameTitle?: string, label?: string, setTodoSettingIsOpen?: React.Dispatch<React.SetStateAction<boolean>>, addNewTask: (label: string, resetTime: string, resetTimeStatus: { time: number, week?: number, day?: number}, priority: string) => void}) {
   const [ resetTimeStatus, setResetTimeStatus ] = useState<string|null>(null);
   const labelRef = useRef<HTMLInputElement>(null);
   const resetTimeRef = useRef<HTMLSelectElement>(null);
@@ -24,7 +24,7 @@ export default function TodoSetting({gameTitle, label, setTodoSettingIsOpen, add
     if (!label || !resetTime || !priority || !resetTimeTime) return;
     if ((resetTimeStatus === 'weekly' || resetTimeStatus === 'every-week') && !resetTimeWeek) return;
     if (resetTimeStatus === 'monthly' && !resetTimeDay) return;
-    addNewTask(label, resetTime, {time: Number(resetTimeTime), week: resetTimeWeek, day: resetTimeDay ? (Number(resetTimeDay)) : undefined}, priority);
+    addNewTask(label, resetTime, {time: Number(resetTimeTime), week: Number(resetTimeWeek), day: resetTimeDay ? (Number(resetTimeDay)) : undefined}, priority);
   }
 
   return (

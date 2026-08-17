@@ -5,7 +5,7 @@ interface StoreTask {
   resetTime: string,
   resetTimeStatus: {
     time: number,
-    week?: string,
+    week?: number,
     day?: number
   },
   priority: string,

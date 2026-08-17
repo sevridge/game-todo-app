@@ -72,7 +72,7 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
   const [ currentGameData, setCurrentGameData ] = useState<StoreGame|null>(null);
   const [ todoSettingIsOpen, setTodoSettingIsOpen ] = useState<boolean>(false);
 
-  function addNewTask(label: string, resetTime: string, resetTimeStatus: { time: number, week?: string, day?: number}, priority: string) {
+  function addNewTask(label: string, resetTime: string, resetTimeStatus: { time: number, week?: number, day?: number}, priority: string) {
     if (!currentGameData) return;
     setRegTasks?.(prev => {
       const newPrev = prev ? [...prev] : [];
