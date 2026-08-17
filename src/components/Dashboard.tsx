@@ -38,11 +38,19 @@ function TaskItem({task, setRegTasks}: {task: StoreTask, setRegTasks?: React.Dis
     })
   }
 
+  function checkTask(taskId: string) {
+    setRegTasks?.(prev => {
+      const newPrev = prev?.map((v) => v.id === taskId ? {...v, checked: !v.checked} : v) || null;
+      tasksStore.set('tasks', newPrev);
+      return newPrev;
+    })
+  }
+
   return (
     <div className="px-2 py-1 rounded-md bg-zinc-800 select-none">
       <div className="flex items-center gap-2 relative">
         <label htmlFor={id} className="group">
-          <input type="checkbox" className="hidden" id={id} />
+          <input type="checkbox" className="hidden" id={id} checked={task.checked || false} onChange={() => checkTask(task.id)} />
           <div className="flex items-center justify-center w-4 h-4 rounded-sm cursor-pointer bg-zinc-600 group-has-[input:checked]:bg-zinc-500">
             <div className="hidden group-has-[input:checked]:flex"><FontAwesomeIcon icon={faCheck} className="text-xs" /></div>
           </div>

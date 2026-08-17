@@ -8,7 +8,8 @@ interface StoreTask {
     week?: string,
     day?: number
   },
-  priority: string
+  priority: string,
+  checked?: boolean
 }
 
 interface StoreGame {
