@@ -4,6 +4,7 @@ import { faCheck, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useId, useState } from "react";
 import TodoSetting from "./TodoSetting";
 import { randomString } from "../utils/string";
+import { tasksStore } from "../utils/storage";
 
 function TaskItem({task, setRegTasks}: {task: StoreTask, setRegTasks?: React.Dispatch<React.SetStateAction<StoreTask[] | null>>}) {
   const id = useId();
@@ -11,9 +12,7 @@ function TaskItem({task, setRegTasks}: {task: StoreTask, setRegTasks?: React.Dis
   function removeTask() {
     setRegTasks?.(prev => {
       const newPrev = prev?.filter((v) => v.id !== task.id) ;
-
-      // TODO: Store保存
-
+      tasksStore.set('tasks', newPrev);
       return newPrev || null;
     })
   }
@@ -51,9 +50,7 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
         gameId: currentGameData.id,
         label,
       })
-
-      // TODO: Store保存
-
+      tasksStore.set('tasks', newPrev);
       return newPrev;
     })
     setTodoSettingIsOpen(false);

@@ -3,6 +3,7 @@ import { faCaretDown, faCaretRight, faCheck, faPlus, faXmark } from "@fortawesom
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react"
 import { randomString } from "../utils/string";
+import { gamesStore } from "../utils/storage";
 
 export default function GameSelector({regGames, setRegGames, currentGameData, setCurrentGameData}: {regGames?: StoreGame[], setRegGames?: React.Dispatch<React.SetStateAction<StoreGame[] | null>>, currentGameData?: StoreGame, setCurrentGameData?: React.Dispatch<React.SetStateAction<StoreGame | null>>}) {
   const [ isOpen, setIsOpen ] = useState<boolean>(false);
@@ -58,9 +59,7 @@ export default function GameSelector({regGames, setRegGames, currentGameData, se
           id: randomString(8),
           title: value
         })
-
-        // TODO: Storeに保存する
-
+        gamesStore.set('games', newPrev);
         return newPrev;
       })
     }
