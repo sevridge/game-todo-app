@@ -91,7 +91,7 @@ export default function GameSelector({regGames, setRegGames, currentGameData, se
             {isOpen ? <FontAwesomeIcon icon={faCaretDown} /> : <FontAwesomeIcon icon={faCaretRight} />}
           </div>
           {isOpen && (
-            <div className="absolute top-full rounded-md overflow-hidden bg-zinc-700 whitespace-nowrap">
+            <div className="absolute top-full rounded-md overflow-hidden bg-zinc-700 whitespace-nowrap z-100">
               <div className="px-2 py-1 text-xs text-zinc-400">ゲーム</div>
               {regGames?.[0] && regGames.map((v) => {
                 return (
