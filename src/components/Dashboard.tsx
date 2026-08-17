@@ -1,10 +1,31 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GameSelector from "./GameSelector";
-import { faCheck, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesDown, faAnglesUp, faCheck, faMinus, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useId, useState } from "react";
 import TodoSetting from "./TodoSetting";
 import { randomString } from "../utils/string";
 import { tasksStore } from "../utils/storage";
+
+function TaskItemTiming({resetTime}: {resetTime: string}) {
+  return (
+    <div className="text-[10px]">
+      {resetTime === 'daily' && <div className="px-1 rounded-full text-red-200 bg-red-500/30">毎日</div>}
+      {resetTime === 'weekly' && <div className="px-1 rounded-full text-blue-200 bg-blue-500/30">毎週</div>}
+      {resetTime === 'monthly' && <div className="px-1 rounded-full text-green-200 bg-green-500/30">毎月</div>}
+      {resetTime === 'every-week' && <div className="px-1 rounded-full text-purple-200 bg-purple-500/30">隔週</div>}
+    </div>
+  )
+}
+
+function TaskPriority({priority}: {priority: string}) {
+  return (
+    <div className="h-5 aspect-square text-xs rounded-full overflow-hidden">
+      {priority === 'high' && <div className="flex items-center justify-center h-full w-full text-blue-200 bg-blue-500/30"><FontAwesomeIcon icon={faAnglesUp} /></div>}
+      {priority === 'medium' && <div className="flex items-center justify-center h-full w-full text-green-200 bg-green-500/30"><FontAwesomeIcon icon={faMinus} /></div>}
+      {priority === 'low' && <div className="flex items-center justify-center h-full w-full text-yellow-200 bg-yellow-500/30"><FontAwesomeIcon icon={faAnglesDown} /></div>}
+    </div>
+  )
+}
 
 function TaskItem({task, setRegTasks}: {task: StoreTask, setRegTasks?: React.Dispatch<React.SetStateAction<StoreTask[] | null>>}) {
   const id = useId();
@@ -19,15 +40,17 @@ function TaskItem({task, setRegTasks}: {task: StoreTask, setRegTasks?: React.Dis
 
   return (
     <div className="px-2 py-1 rounded-md bg-zinc-800 select-none">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 relative">
         <label htmlFor={id} className="group">
           <input type="checkbox" className="hidden" id={id} />
           <div className="flex items-center justify-center w-4 h-4 rounded-sm cursor-pointer bg-zinc-600 group-has-[input:checked]:bg-zinc-500">
             <div className="hidden group-has-[input:checked]:flex"><FontAwesomeIcon icon={faCheck} className="text-xs" /></div>
           </div>
         </label>
+        <TaskPriority priority={task.priority} />
         <div>{task.label}</div>
-        <div className="flex items-center flex-1 justify-end">
+        <TaskItemTiming resetTime={task.resetTime} />
+        <div className="absolute top-0 right-0 h-full flex items-center justify-end">
           <div className="flex items-center cursor-pointer text-[0.65rem]" onClick={removeTask}>
             <FontAwesomeIcon icon={faXmark} />
           </div>
@@ -49,6 +72,9 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
         id: randomString(8),
         gameId: currentGameData.id,
         label,
+        resetTime,
+        resetTimeStatus,
+        priority
       })
       tasksStore.set('tasks', newPrev);
       return newPrev;
