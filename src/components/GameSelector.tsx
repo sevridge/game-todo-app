@@ -25,11 +25,6 @@ export default function GameSelector({regGames, setRegGames, currentGameData, se
 
   useEffect(() => {
     if (!regGames?.[0]) return;
-    setCurrentGameData?.(regGames[0]);
-  }, [])
-
-  useEffect(() => {
-    if (!regGames?.[0]) return;
     setCurrentGameData?.(regGames[regGames.length - 1]);
   }, [regGames])
 
@@ -53,12 +48,13 @@ export default function GameSelector({regGames, setRegGames, currentGameData, se
       setIsMissingValue(true);
       setInputGameIsOpen(false);
 
+      const newGame = {
+        id: randomString(8),
+        title: value
+      }
       setRegGames?.(prev => {
         const newPrev = prev ? [...prev] : [];
-        newPrev.push({
-          id: randomString(8),
-          title: value
-        })
+        newPrev.push(newGame);
         gamesStore.set('games', newPrev);
         return newPrev;
       })

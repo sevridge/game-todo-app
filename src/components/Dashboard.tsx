@@ -74,16 +74,17 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
 
   function addNewTask(label: string, resetTime: string, resetTimeStatus: { time: number, week?: number, day?: number}, priority: string) {
     if (!currentGameData) return;
+    const newTask = {
+      id: randomString(8),
+      gameId: currentGameData.id,
+      label,
+      resetTime,
+      resetTimeStatus,
+      priority
+    }
     setRegTasks?.(prev => {
       const newPrev = prev ? [...prev] : [];
-      newPrev.push({
-        id: randomString(8),
-        gameId: currentGameData.id,
-        label,
-        resetTime,
-        resetTimeStatus,
-        priority
-      })
+      newPrev.push(newTask)
       tasksStore.set('tasks', newPrev);
       return newPrev;
     })
