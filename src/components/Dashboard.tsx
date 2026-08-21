@@ -27,7 +27,7 @@ function TaskPriority({priority}: {priority: string}) {
   )
 }
 
-function TaskItem({task, setRegTasks}: {task: StoreTask, setRegTasks?: React.Dispatch<React.SetStateAction<StoreTask[] | null>>}) {
+function TaskItem({task, setRegTasks, lastUpdate, setLastUpdates}: {task: StoreTask, setRegTasks?: React.Dispatch<React.SetStateAction<StoreTask[] | null>>, lastUpdate?: number, setLastUpdates?: React.Dispatch<React.SetStateAction<LastUpdateData | null>>}) {
   const id = useId();
 
   function removeTask() {
@@ -42,6 +42,12 @@ function TaskItem({task, setRegTasks}: {task: StoreTask, setRegTasks?: React.Dis
     setRegTasks?.(prev => {
       const newPrev = prev?.map((v) => v.id === taskId ? {...v, checked: !v.checked} : v) || null;
       tasksStore.set('tasks', newPrev);
+      return newPrev;
+    })
+    setLastUpdates?.(prev => {
+      const newPrev = { ...prev};
+      newPrev[taskId] = new Date().getTime();
+      tasksStore.set('lastUpdate', newPrev);
       return newPrev;
     })
   }
@@ -68,7 +74,7 @@ function TaskItem({task, setRegTasks}: {task: StoreTask, setRegTasks?: React.Dis
   )
 }
 
-export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}: {regGames?: StoreGame[], regTasks?: StoreTask[], setRegGames?: React.Dispatch<React.SetStateAction<StoreGame[] | null>>, setRegTasks?: React.Dispatch<React.SetStateAction<StoreTask[] | null>>}) {
+export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks, lastUpdates, setLastUpdates}: {regGames?: StoreGame[], regTasks?: StoreTask[], setRegGames?: React.Dispatch<React.SetStateAction<StoreGame[] | null>>, setRegTasks?: React.Dispatch<React.SetStateAction<StoreTask[] | null>>, lastUpdates?: LastUpdateData, setLastUpdates?: React.Dispatch<React.SetStateAction<LastUpdateData | null>>}) {
   const [ currentGameData, setCurrentGameData ] = useState<StoreGame|null>(null);
   const [ todoSettingIsOpen, setTodoSettingIsOpen ] = useState<boolean>(false);
 
@@ -98,7 +104,7 @@ export default function Dashboard({regGames, regTasks, setRegGames, setRegTasks}
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
             {regTasks?.map((v, i) => {
-              return v.gameId === currentGameData?.id && <TaskItem key={i} task={v} setRegTasks={setRegTasks} />
+              return v.gameId === currentGameData?.id && <TaskItem key={i} task={v} setRegTasks={setRegTasks} lastUpdate={lastUpdates?.[v.id]} setLastUpdates={setLastUpdates} />
             })}
           </div>
           {currentGameData && <button className="flex items-center outline-none gap-1 border border-dashed px-2 py-1 rounded-md cursor-pointer" onClick={() => setTodoSettingIsOpen(true)}>

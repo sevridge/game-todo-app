@@ -16,3 +16,7 @@ interface StoreGame {
   id: string,
   title: string
 }
+
+interface LastUpdateData {
+  [id: string]: number
+}

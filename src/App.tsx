@@ -17,8 +17,7 @@ async function initWindow() {
   window.setPosition(new LogicalPosition(posX, 0));
 }
 
-async function isTaskReset(task: StoreTask) {
-  const tasksLastUpdate: {[id: string]: number}|undefined = await tasksStore.get('lastUpdate');
+async function isTaskReset(task: StoreTask, tasksLastUpdate?: LastUpdateData) {
   const currentTaskLastUpdate = tasksLastUpdate?.[task.id];
   if (!currentTaskLastUpdate) return false;
   const now = new Date();
@@ -75,6 +74,7 @@ async function isTaskReset(task: StoreTask) {
   }
 
   if (lastUpdate <  resetTime) {
+    console.log('lastUpdate < resetTime なのでデータを更新しました。');
     return true;
   }
   return false;
@@ -83,26 +83,37 @@ async function isTaskReset(task: StoreTask) {
 function App() {
   const [ registeredTasks, setRegisteredTasks ] = useState<StoreTask[]|null>(null);
   const [ registeredGames, setRegisteredGames ] = useState<StoreGame[]|null>(null);
+  const [ lastUpdates, setLastUpdates ] = useState<LastUpdateData|null>(null);
 
   useEffect(() => {
     (async () => {
       await initWindow();
       const games: StoreGame[]|undefined = await gamesStore.get('games');
       const tasks: StoreTask[]|undefined = await tasksStore.get('tasks');
+      const lastUpdates: LastUpdateData|undefined = await tasksStore.get('lastUpdate')
       if (games) {
         setRegisteredGames(games);
       }
       if (tasks) {
         const newTasks: StoreTask[] = await Promise.all(tasks.map(async (_task) => {
           const task = {..._task};
-          const isReset = await isTaskReset(task);
+          const isReset = await isTaskReset(task, lastUpdates);
           if (isReset) {
             task.checked = false;
+            setLastUpdates(prev => {
+              const newPrev = { ...prev};
+              newPrev[task.id] = new Date().getTime();
+              tasksStore.set('lastUpdate', newPrev);
+              return newPrev;
+            })
           }
 
           return task;
         }))
         setRegisteredTasks(newTasks);
+      }
+      if (lastUpdates) {
+        setLastUpdates(lastUpdates);
       }
     })();
   }, []);
@@ -112,7 +123,7 @@ function App() {
       <div className="h-full grid grid-rows-[auto_1fr]">
         <Titlebar />
         <div className="bg-zinc-900 relative">
-          <Dashboard regGames={registeredGames ? registeredGames : undefined} regTasks={registeredTasks ? registeredTasks : undefined} setRegGames={setRegisteredGames} setRegTasks={setRegisteredTasks} />
+          <Dashboard regGames={registeredGames ? registeredGames : undefined} regTasks={registeredTasks ? registeredTasks : undefined} setRegGames={setRegisteredGames} setRegTasks={setRegisteredTasks} lastUpdates={lastUpdates ? lastUpdates : undefined} setLastUpdates={setLastUpdates} />
         </div>
       </div>
     </main>
