@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRotateRight, faThumbtack, faThumbtackSlash, faWindowMinimize, faX } from "@fortawesome/free-solid-svg-icons";
 import { currentMonitor, getCurrentWindow, LogicalPosition, LogicalSize } from "@tauri-apps/api/window";
 import { useEffect, useRef, useState } from 'react';
+import { storeData } from '../utils/storage';
 
 async function initWindow() {
   const monitor = await currentMonitor();
@@ -33,6 +34,15 @@ export default function Titlebar() {
 
   useEffect(() => {
     (async () => {
+      const storeAlwaysOnTop: boolean|undefined = await storeData.get('alwaysOnTop');
+      setIsAlwaysOnTop(storeAlwaysOnTop || false);
+      const window = await getCurrentWindow();
+      window.setAlwaysOnTop(storeAlwaysOnTop || false);
+    })()
+  }, []);
+
+  useEffect(() => {
+    (async () => {
       const iconTitleEl = iconTitleRef.current;
       if (!iconTitleEl || !iconHover) return;
       const window = await getCurrentWindow();
@@ -56,9 +66,11 @@ export default function Titlebar() {
     if (alwaysOnTop) {
       window.setAlwaysOnTop(false);
       setIsAlwaysOnTop(false);
+      await storeData.set('alwaysOnTop', false);
     } else {
       window.setAlwaysOnTop(true);
       setIsAlwaysOnTop(true);
+      await storeData.set('alwaysOnTop', true);
     }
   }
 
