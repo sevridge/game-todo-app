@@ -13,10 +13,11 @@
     "windows": [
       {
         "title": "game-todo-app",
-        "width": 500,
+        "width": 350,
         "height": 600,
         "shadow": false,
-        "decorations": false
+        "decorations": false,
+        "resizable": false
       }
     ],
     "security": {
