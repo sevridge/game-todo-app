@@ -74,7 +74,6 @@ async function isTaskReset(task: StoreTask, tasksLastUpdate?: LastUpdateData) {
   }
 
   if (lastUpdate <  resetTime) {
-    console.log('lastUpdate < resetTime なのでデータを更新しました。');
     return true;
   }
   return false;
