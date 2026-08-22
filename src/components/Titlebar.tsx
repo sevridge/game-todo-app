@@ -94,7 +94,7 @@ export default function Titlebar() {
         <FontAwesomeIcon className="cursor-pointer p-2 hover:bg-red-500" icon={faX} onClick={windowClose} onMouseEnter={(e) => _onIconHover(true, e, '閉じる')} onMouseLeave={() => setIconHover(null)} />
       </div>
       {iconHover && (
-        <div ref={iconTitleRef} className="absolute pointer-events-none text-xs whitespace-nowrap z-999" style={{left: iconHover.x, top: iconHover.y + 16}}>{iconHover.title}</div>
+        <div ref={iconTitleRef} className="absolute pointer-events-none text-xs whitespace-nowrap z-999 px-1 bg-zinc-900" style={{left: iconHover.x, top: iconHover.y + 16}}>{iconHover.title}</div>
       )}
     </div>
   )
