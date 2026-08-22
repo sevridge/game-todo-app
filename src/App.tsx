@@ -121,7 +121,7 @@ function App() {
     <main className="h-full overflow-hidden text-white">
       <div className="h-full grid grid-rows-[auto_1fr]">
         <Titlebar />
-        <div className="bg-zinc-900 relative">
+        <div className="bg-zinc-900 relative min-w-0">
           <Dashboard regGames={registeredGames ? registeredGames : undefined} regTasks={registeredTasks ? registeredTasks : undefined} setRegGames={setRegisteredGames} setRegTasks={setRegisteredTasks} lastUpdates={lastUpdates ? lastUpdates : undefined} setLastUpdates={setLastUpdates} />
         </div>
       </div>
