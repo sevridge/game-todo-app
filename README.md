@@ -1,7 +1,7 @@
-# Tauri + React + Typescript
-
-This template should help get you started developing with Tauri, React and Typescript in Vite.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+# Game ToDo App
+ゲームに特化した簡易的なToDoアプリ。
+ゲームごとに毎日/毎週/隔週/毎月のやることを登録可能。
+# Features | 特徴
+- ゲームごとのToDo管理
+- 毎日/毎週/隔週/毎月のタスク管理
+- タスク自動リセット
