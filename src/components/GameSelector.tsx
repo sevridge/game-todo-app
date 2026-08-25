@@ -10,7 +10,7 @@ export default function GameSelector({regGames, setRegGames, currentGameData, se
   const [ inputGameIsOpen, setInputGameIsOpen ] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  function onClickDocument(e: PointerEvent) {
+  function onClickDocument(e: MouseEvent) {
     if (e.target instanceof Node && isOpen && !dropdownRef.current?.contains(e.target)) {
       setIsOpen(false);
     }
